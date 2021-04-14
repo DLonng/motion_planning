@@ -1,6 +1,8 @@
 ## A* algorithm [![Build Status](https://travis-ci.org/daancode/a-star.svg?branch=master)](https://travis-ci.org/da-an/SHA-1)
-A* search algorithm written in C++ programming language.
- - requires compiler support for C++11
+- 原项目仓库：[https://github.com/daancode/a-star](https://github.com/daancode/a-star)
+
+- A* search algorithm written in C++ programming language.
+     - requires compiler support for C++11
 
 #### Usage example
 ```cpp
