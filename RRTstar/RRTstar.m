@@ -12,7 +12,7 @@ Delta = 30;                 % 设置扩展步长 default:30
 RadiusForNeib = 70;          % RRT* 新的参数：rewire 的范围,半径 r
 MaxIterations = 1000;       % 最大迭代次数
 UpdateTime = 50;            % 更新路径的时间间隔
-DelayTime = 0.0;            % 绘图延迟时间
+DelayTime = 0.0;            % 绘图延迟时间 0.1
 %% 建树初始化:T 是树,v 是节点
 T.v(1).x = x_I;             % 把起始节点加入到T中
 T.v(1).y = y_I; 
@@ -35,9 +35,12 @@ count = 1;
 pHandleList = [];
 % 保存新采样点的绘图句柄
 lHandleList = [];
+% 保存最优路劲的绘图句柄
 resHandleList = [];
+% 是否找到路径
 findPath = 0;
 update_count = 0;
+% 保存最优路径点
 path.pos = [];
 
 % RRT* 达到迭代次数才结束算法
@@ -167,7 +170,7 @@ for iter = 1 : MaxIterations
     % Step 8: 检查是否到达目标点附近 
     disToGoal = sqrt((x_new(1) - x_G)^2 + (x_new(2) - y_G)^2);
     if(disToGoal < GoalThreshold && ~findPath)    % 找到目标点，此条件只进入一次
-        % 设置已经找到路径
+        % 设置已经找到路径，后续利用这个标记把优化的轨迹画出来
         findPath = 1;
 
         count = count + 1;    % 手动将 Goal 加入到树中
@@ -200,7 +203,7 @@ for iter = 1 : MaxIterations
                     break
                 end
                 j = j + 1;
-            end  
+            end
             
             % 每次绘制 RRT* 优化的路径前，把上次优化的路径句柄清空
             for delete_index = 1:length(resHandleList)
